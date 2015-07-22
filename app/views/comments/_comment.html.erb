@@ -1,7 +1,10 @@
+<div class="comment">
 <p>
-	<strong><%= comment.commenter %></strong>
+	<strong><%= comment.user.name %></strong>
 	<%= comment.body %>
 	<%= link_to 'Destroy Comment', [comment.article, comment],
                method: :delete,
                data: { confirm: 'Are you sure?' } %>
 </p>
+<p class="date"><%= comment.created_at.to_time.strftime("%A, %B %d, %Y at %H:%M") %></p>
+</div>

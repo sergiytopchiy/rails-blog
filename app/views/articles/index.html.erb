@@ -1,17 +1,19 @@
 <h1>Listing articles</h1>
-<table>
+<table class="table">
 	<tr>
 		<th>ID</th>
 		<th>Title</th>
 		<th>Text</th>
 		<th>Created date</th>
+		<th></th>
+		<th></th>
 	</tr>
 	<% @articles.each do |article| %>
 	<tr>
 		<td><%= article.id %></td>
 		<td><%= link_to article.title, article_path(id: article.id) %></td>
 		<td><%= article.text %></td>
-		<td><%= article.created_at %></td>
+		<td><%= article.created_at.to_time.strftime("%A, %B %d, %Y at %H:%M") %></td>
 		<td><%= link_to 'Edit', edit_article_path(article) %></td>
 		<td><%= link_to 'Destroy', article_path(article),
           method: :delete,
