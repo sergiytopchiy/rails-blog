@@ -14,10 +14,10 @@
 		<td><%= link_to article.title, article_path(id: article.id) %></td>
 		<td><%= article.text %></td>
 		<td><%= article.created_at.to_time.strftime("%A, %B %d, %Y at %H:%M") %></td>
-		<td><%= link_to 'Edit', edit_article_path(article) %></td>
+		<td><%= link_to 'Edit', edit_article_path(article) if article.owned_by?(current_user) %></td>
 		<td><%= link_to 'Destroy', article_path(article),
           method: :delete,
-          data: { confirm: 'Are you sure?' } %></td>
+          data: { confirm: 'Are you sure?' } if article.owned_by?(current_user) %></td>
 	</tr>
 	<% end %>
 </table>
