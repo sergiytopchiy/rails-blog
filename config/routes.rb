@@ -1,9 +1,8 @@
 Rails.application.routes.draw do
   devise_for :users
   resources :articles do
-    resources :comments
+    resources :comments, only: [:create, :destroy]
   end
-  resources :books
   root 'welcome#index'
 
   # The priority is based upon order of creation: first created -> highest priority.

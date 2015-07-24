@@ -1,6 +1,7 @@
 class ArticlesController < ApplicationController
 
-  before_filter :find_article, only: [:show, :edit, :update, :destroy]
+  before_action :find_article, only: [:show, :edit, :update, :destroy]
+  before_action :validate_author, only: [:edit, :update, :destroy]
 
   def index
     @articles = Article.all
@@ -42,6 +43,13 @@ class ArticlesController < ApplicationController
 
   def find_article
     @article = Article.find(params[:id])
+  end
+
+  def validate_author
+    unless @article.owned_by?(current_user)
+      flash[:alert] = 'You are not an owner'
+      redirect_to articles_path
+    end
   end
 
 end

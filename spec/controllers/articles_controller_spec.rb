@@ -2,22 +2,22 @@ require "rails_helper"
 
 describe ArticlesController do
   let(:user) { create(:user) }
+  before { sign_in user }
 
   describe "GET #index" do
     it "responds successfully with an HTTP 200 status code" do
-      sign_in user
       get :index
+
       expect(response).to be_ok
     end
 
     it "renders the index template" do
-      sign_in user
       get :index
+
       expect(response).to render_template("index")
     end
 
     it "loads all of the articles into @articles" do
-      sign_in user
       articles = create_list(:article, 2, user: user)
       get :index
 
@@ -27,7 +27,6 @@ describe ArticlesController do
 
   describe "GET #show" do
     it "shows new article" do
-      sign_in user
       article = create(:article, user: user, text: "123")
       get :show, id: article.id
 
@@ -37,7 +36,6 @@ describe ArticlesController do
 
   describe "POST #create" do
     it "creates new article for current user" do
-      sign_in user
       post :create, article: {title: "test article", text: "123"}
       article = Article.last
 
@@ -47,7 +45,6 @@ describe ArticlesController do
     end
 
     it "does not create new article if validation failed" do
-      sign_in user
       post :create, article: {title: "test", text: "123"}
 
       expect(response).to render_template("new")
@@ -57,7 +54,6 @@ describe ArticlesController do
 
   describe "DELETE #destroy" do
     it "deletes the article and redirects to articles index page" do
-      sign_in user
       article = create(:article, user: user)
       expect(Article.all.size).to be(1)
       delete :destroy, id: article.id
@@ -65,17 +61,44 @@ describe ArticlesController do
       expect(response).to redirect_to(articles_path)
       expect(Article.all).to be_empty
     end
+
+    it "does not delete article if user is not author" do
+      article = create(:article)
+      expect(Article.all.size).to be(1)
+      delete :destroy, id: article.id
+
+      expect(response).to redirect_to(articles_path)
+      expect(flash[:alert]).to eq("You are not an owner")
+      expect(Article.all).to_not be_empty
+    end
   end
 
   describe "PUT #update" do
+    let(:article) { create(:article, user: user, title: "super title", text: "My text") }
+
     it "update article" do
-      sign_in user
-      article = create(:article, user: user, title: "super title", text: "My text")
       put :update, id: article.id, article: {title: "NotTitle"}
       article.reload
 
       expect(article.title).to eq("NotTitle")
     end
-  end
 
+    it "does not update article if validation failed" do
+      put :update, id: article.id, article: {title: "No"}
+      article.reload
+
+      expect(response).to render_template("edit")
+      expect(article.title).to eq("super title")
+    end
+
+    it "does not update article if user is not author" do
+      article = create(:article, title: "super title")
+      put :update, id: article.id, article: {title: "NotTitle"}
+      article.reload
+
+      expect(response).to redirect_to(articles_path)
+      expect(flash[:alert]).to eq("You are not an owner")
+      expect(article.title).to eq("super title")
+    end
+  end
 end

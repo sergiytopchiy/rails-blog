@@ -15,7 +15,7 @@ describe "routing for articles", type: :routing do
 
 end
 
-describe "routing for comments", :type => :routing do
+describe "routing for comments", type: :routing do
 
   it "routes /articles/:article_id/comments" do
     expect(post: "/articles/42/comments").to route_to(controller: "comments", action: "create", article_id: "42")

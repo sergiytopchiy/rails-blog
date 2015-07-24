@@ -17,7 +17,7 @@ describe CommentsController do
   end
 
   describe "DELETE #destroy" do
-    it "deletes the comment from comments" do
+    it "deletes the comment from comments by author of comment" do
       sign_in user
       article = create(:article)
       comment = create(:comment, user: user, article: article)
@@ -26,6 +26,29 @@ describe CommentsController do
 
       expect(response).to redirect_to(article_path(article.id))
       expect(article.comments).to be_empty
+    end
+
+    it "deletes the comment from comments by author of article" do
+      sign_in user
+      article = create(:article, user: user)
+      comment = create(:comment, article: article)
+      expect(article.comments.size).to be(1)
+      delete :destroy, article_id: article.id, id: comment.id
+
+      expect(response).to redirect_to(article_path(article.id))
+      expect(article.comments).to be_empty
+    end
+
+    it "try to delete comment by not an author of article and not" do
+      sign_in user
+      article = create(:article)
+      comment = create(:comment, article: article)
+      expect(article.comments.size).to be(1)
+      delete :destroy, article_id: article.id, id: comment.id
+
+      expect(response).to redirect_to(article_path(article.id))
+      expect(article.comments).to_not be_empty
+      expect(flash[:alert]).to eq("You are not an owner of this comment")
     end
   end
 end
