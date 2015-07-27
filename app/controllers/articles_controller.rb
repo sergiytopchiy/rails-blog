@@ -1,10 +1,10 @@
 class ArticlesController < ApplicationController
-
+  skip_before_action :authenticate_user!, only: [:index, :show]
   before_action :find_article, only: [:show, :edit, :update, :destroy]
   before_action :validate_author, only: [:edit, :update, :destroy]
 
   def index
-    @articles = Article.all
+    @articles = Article.all #just assign to instanse variable all of artivles values
   end
 
   def new
@@ -12,43 +12,42 @@ class ArticlesController < ApplicationController
   end
 
   def create
-    @article = Article.new(article_params)
-    @article.user_id = current_user.id
+    @article = Article.new(article_params) #Create new aticle with two parameters: title, text
+    @article.user_id = current_user.id #Adding to aticles column value of cuurent user id
 
-    if @article.save
-      redirect_to @article
+    if @article.save #if saving of article is correct, it will return true
+      redirect_to @article #and will redirect to saved article
     else
-      render 'new'
+      render 'new' # if saving is not correct - it will render a new form
     end
   end
 
-  def update
-    if @article.update(article_params)
-      redirect_to @article
+  def update # first the before action will find cuurent article by id (before action)
+    if @article.update(article_params) #then, if updating of article is successful
+      redirect_to @article #it will redirect us to current article page
     else
-      render 'edit'
+      render 'edit' # else, page of article editing will render again
     end
   end
 
-  def destroy
-    @article.destroy
-    redirect_to articles_path
+  def destroy #if we want to destroy some article, we must to know article id
+    @article.destroy # this line is calling destroy method from current article
+    redirect_to articles_path #and redirecting to articles
   end
 
   private
 
-  def article_params
+  def article_params # this method need to say what columns we want to change
     params.require(:article).permit(:title, :text)
   end
 
-  def find_article
+  def find_article #this article returns result of finding current articles ID
     @article = Article.find(params[:id])
   end
 
-  def validate_author
+  def validate_author #this method need to chek if current user is owner of article
     unless @article.owned_by?(current_user)
-      flash[:alert] = 'You are not an owner'
-      redirect_to articles_path
+      redirect_to articles_path, alert: I18n.t('errors.not_an_owner')
     end
   end
 

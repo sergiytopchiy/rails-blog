@@ -27,7 +27,7 @@ describe ArticlesController do
 
   describe "GET #show" do
     it "shows new article" do
-      article = create(:article, user: user, text: "123")
+      article = create(:article, user: user)
       get :show, id: article.id
 
       expect(assigns(:article).id).to eq(article.id)
@@ -80,6 +80,7 @@ describe ArticlesController do
       put :update, id: article.id, article: {title: "NotTitle"}
       article.reload
 
+      expect(response).to redirect_to(article_path(article.id))
       expect(article.title).to eq("NotTitle")
     end
 

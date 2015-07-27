@@ -1,0 +1,59 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
+
+uk:
+  welcome: "Вітаю в Сірьога блог"
+  articles:
+    index:
+      listing_title: "Список статей"
+      confirm: "Ви упевнені?"
+    show:
+      add: 'Додати комент:'
+      attention: 'Щоб додати комент необхідно увійти в систему!'
+    edit:
+      title: "Редагувати статтю"
+    new:
+      title: "Нова стаття"
+    form:
+      title: "Заголовок"
+      text: "Текст"
+  comments:
+    form:
+      text: "Текст коментаря"
+  shared:
+    navbar:
+      title: "Блог Сірьога"
+      signed: "Увійшов як"
+
+  buttons:
+    edit: 'Редагувати'
+    delete: 'Видалити'
+    new_article: 'Нова стаття'
+    back: 'назад'
+    create_a: "Створити статтю"
+    create_c: "Створити комент"
+    articles: "Статті"
+    sign_out: "Вийти"
+    user_cabinet: "Кабінет користувача"
+
+  errors:
+    not_an_owner: "Ви не власник даної статті"
+    not_an_owner_of_comment: "Ви не власник даного коменту"

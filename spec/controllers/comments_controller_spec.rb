@@ -2,10 +2,10 @@ require "rails_helper"
 
 describe CommentsController do
   let(:user) { create(:user) }
+  before { sign_in user }
 
   describe "POST #create" do
     it "creates new comment for current user" do
-      sign_in user
       article = create(:article)
       post :create, comment: {body: "test article"}, article_id: article.id
       comment = Comment.last
@@ -18,7 +18,6 @@ describe CommentsController do
 
   describe "DELETE #destroy" do
     it "deletes the comment from comments by author of comment" do
-      sign_in user
       article = create(:article)
       comment = create(:comment, user: user, article: article)
       expect(article.comments.size).to be(1)
@@ -29,7 +28,6 @@ describe CommentsController do
     end
 
     it "deletes the comment from comments by author of article" do
-      sign_in user
       article = create(:article, user: user)
       comment = create(:comment, article: article)
       expect(article.comments.size).to be(1)
@@ -40,7 +38,6 @@ describe CommentsController do
     end
 
     it "try to delete comment by not an author of article and not" do
-      sign_in user
       article = create(:article)
       comment = create(:comment, article: article)
       expect(article.comments.size).to be(1)

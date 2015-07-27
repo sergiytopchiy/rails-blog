@@ -7,24 +7,36 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="/">BlogSerega</a>
+      <a class="navbar-brand" href="/"><%= t("shared.navbar.title") %></a>
     </div>
     <ul class="nav navbar-nav">
       <li class="<%= navbar_link('articles') %>">
-        <a href="<%= articles_path %>">Articles</a>
+        <a href="<%= articles_path %>"><%= t("buttons.articles") %></a>
       </li>
+      <li>
+        <a href="#"> </a>
     </ul>
     <% if user_signed_in? %>
       <div class="nav navbar-nav navbar-right">
-        <a class="btn btn-default navbar-btn" href="<%= destroy_user_session_path %>">Sign out</a>
+        <a class="btn btn-default navbar-btn" href="<%= destroy_user_session_path %>">
+          <%= t("buttons.sign_out")%>
+        </a>
       </div>
       <div class="nav navbar-nav navbar-right">
-        <a class="btn btn-default navbar-btn" href="<%= edit_user_registration_path %>">User cabinet</a>
+        <a class="btn btn-default navbar-btn" href="<%= edit_user_registration_path %>">
+          <%= t("buttons.user_cabinet")%>
+        </a>
       </div>
       <div class="nav navbar-nav navbar-right">
-        <p class="navbar-text">Signed in as <%= current_user.name %></p>
+        <p class="navbar-text"><%= t("shared.navbar.signed")+' '+current_user.name %></p>
       </div>
-
+    <% else %>
+      <div class="nav navbar-nav navbar-right">
+        <a class="btn btn-default navbar-btn" href="<%= new_user_session_path %>"><%= t("devise.sessions.new.sign_in") %></a>
+      </div>
     <% end %>
+    <div class="nav navbar-nav navbar-right local">
+      <%= select_tag "locale-select", options_for_select({'EN' => :en, "UA" => :uk }, session[:locale]), class: "form-control" %>
+    </div>
   </div>
 </nav>

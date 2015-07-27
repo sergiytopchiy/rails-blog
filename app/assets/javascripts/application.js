@@ -15,3 +15,9 @@
 //= require turbolinks
 //= require bootstrap-sprockets
 //= require_tree .
+
+$(document).on('change', '#locale-select', function () {
+  $.post('/locale', {lang: this.value}).then(function () {
+    location.reload();
+  });
+});

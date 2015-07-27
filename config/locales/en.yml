@@ -20,4 +20,40 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  welcome: "Welcome on SeregaBlog"
+  articles:
+    index:
+      listing_title: "Listing articles"
+      confirm: "Are you sure?"
+    show:
+      add: 'Add a comment:'
+      attention: 'To create comment please Log in!'
+    edit:
+      title: "Edit article"
+    new:
+      title: "New article"
+    form:
+      title: "Title"
+      text: "Text"
+  comments:
+    form:
+      text: "Comment text"
+  shared:
+    navbar:
+      title: "Blog Serega"
+      signed: "Signed in as"
+
+  buttons:
+    edit: 'Edit'
+    delete: 'Delete'
+    new_article: 'New article'
+    back: 'back'
+    create_a: "Create article"
+    create_c: "Create comment"
+    articles: "Articles"
+    sign_out: "Sign out"
+    user_cabinet: "User cabinet"
+
+  errors:
+    not_an_owner: "You are not an owner"
+    not_an_owner_of_comment: "You are not an owner of this comment"

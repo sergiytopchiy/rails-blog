@@ -1,24 +1,20 @@
-<h1>Listing articles</h1>
-<table class="table">
-	<tr>
-		<th>ID</th>
-		<th>Title</th>
-		<th>Text</th>
-		<th>Created date</th>
-		<th></th>
-		<th></th>
-	</tr>
-	<% @articles.each do |article| %>
-	<tr>
-		<td><%= article.id %></td>
-		<td><%= link_to article.title, article_path(id: article.id) %></td>
-		<td><%= article.text %></td>
-		<td><%= article.created_at.to_time.strftime("%A, %B %d, %Y at %H:%M") %></td>
-		<td><%= link_to 'Edit', edit_article_path(article) if article.owned_by?(current_user) %></td>
-		<td><%= link_to 'Destroy', article_path(article),
+<h1><%= t('.listing_title') %></h1>
+<% @articles.each do |article| %>
+  <div class="article_body">
+    <div class="pull-right"><%= article.created_at.to_time.strftime("%A, %B %d, %Y at %H:%M") %></div>
+    <br>
+  	<h5 class="article_title"><%= link_to article.title, article_path(id: article.id) %></h5>
+  	<p class="article_text"><%= article.text[0..300] + '...' %></p>
+  	<div class='action_buttons pull-right'>
+      <%= link_to t('buttons.edit'), edit_article_path(article), class: 'btn btn-warning btn-sm' if user_signed_in? && article.owned_by?(current_user) %>
+      <%= link_to t('buttons.delete'), article_path(article),
+          class: 'btn btn-danger btn-sm',
           method: :delete,
-          data: { confirm: 'Are you sure?' } if article.owned_by?(current_user) %></td>
-	</tr>
-	<% end %>
-</table>
-<%= link_to 'New article', new_article_path %>
+          data: { confirm: t('articles.index.confirm') } if user_signed_in? && article.owned_by?(current_user) %>
+    </div>
+      <br>
+  </div>
+<% end %>
+<div class="new_article">
+  <%= link_to t('buttons.new_article'), new_article_path, class: 'btn btn-success' %>
+</div>

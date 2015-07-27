@@ -3,10 +3,10 @@
   <strong><%= comment.user.name %></strong>
   <div class="pull-right">
     <div class="date"><%= comment.created_at.to_time.strftime("%A, %B %d, %Y at %H:%M") %></div>
-    <%= link_to 'Delete', [comment.article, comment],
+    <%= link_to t('buttons.delete'), [comment.article, comment],
                method: :delete,
                data: { confirm: 'Are you sure?' },
-               class: 'btn btn-danger btn-xs' if comment.owned_by?(current_user) || @article.owned_by?(current_user) %>
+               class: 'btn btn-danger btn-xs' if user_signed_in? && (comment.owned_by?(current_user) || @article.owned_by?(current_user)) %>
   </div>
 </div>
 <div class="comment_body"><%= comment.body %> </div>
