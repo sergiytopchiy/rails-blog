@@ -1,0 +1,14 @@
+%h1= t('.listing_title')
+- @articles.each do |article|
+  .article_body
+    .pull-right= article.created_at.to_time.strftime("%A, %B %d, %Y at %H:%M")
+    %br/
+    %h5.article_title= link_to article.title, article_path(id: article.id)
+    %p.article_text= article.text[0..300] + '...'
+    .action_buttons.pull-right
+      = link_to t('buttons.edit'), edit_article_path(article), class: 'btn btn-warning btn-sm' if user_signed_in? && article.owned_by?(current_user)
+      = link_to t('buttons.delete'), article_path(article), class: 'btn btn-danger btn-sm', remote: true, method: :delete, data: { confirm: t('articles.index.confirm') } if user_signed_in? && article.owned_by?(current_user)
+    %br/
+.new_article
+  = link_to t('buttons.new_article'), new_article_path, class: 'btn btn-success'
+  = link_to 'New button', "#", class: 'btn btn-success', onclick: "showHint()"

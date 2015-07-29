@@ -21,3 +21,25 @@ $(document).on('change', '#locale-select', function () {
     location.reload();
   });
 });
+
+$(document).ready(function(){
+  $(".navbar-text").addClass("hide");
+  $(".navbar-text").fadeIn(600).removeClass("hide");
+});
+
+$(document).on('click', '.comment .btn-danger', function (e) {
+  e.preventDefault();
+  $.ajax(e.target.href, {method: 'delete'}).then(function () {
+    $(e.target).parents('.comment').slideUp('slow');
+  });
+});
+
+$(document).on('submit', '#new_comment', function (e) {
+  e.preventDefault(); //ignore href attribute of "a" tag
+  $.post(e.target.action, $(e.target).serialize()).then(function (data) {
+    var $comment = $(data).hide();
+    $('.comments').append($comment);
+    $comment.slideDown('slow');
+    e.target.reset();
+  });
+});

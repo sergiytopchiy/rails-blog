@@ -10,7 +10,7 @@ describe CommentsController do
       post :create, comment: {body: "test article"}, article_id: article.id
       comment = Comment.last
 
-      expect(response).to redirect_to(article_path(article.id))
+      expect(response).to be_ok
       expect(comment.body).to eq("test article")
       expect(comment.user_id).to eq(user.id)
     end
@@ -23,7 +23,7 @@ describe CommentsController do
       expect(article.comments.size).to be(1)
       delete :destroy, article_id: article.id, id: comment.id
 
-      expect(response).to redirect_to(article_path(article.id))
+      expect(response).to be_success
       expect(article.comments).to be_empty
     end
 
@@ -33,7 +33,7 @@ describe CommentsController do
       expect(article.comments.size).to be(1)
       delete :destroy, article_id: article.id, id: comment.id
 
-      expect(response).to redirect_to(article_path(article.id))
+      expect(response).to be_success
       expect(article.comments).to be_empty
     end
 

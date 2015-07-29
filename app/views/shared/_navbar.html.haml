@@ -1,0 +1,28 @@
+%nav.navbar.navbar-default
+  .container-fluid
+    .navbar-header
+      %button.navbar-toggle.collapsed{"aria-expanded" => "false", "data-target" => "#bs-example-navbar-collapse-1", "data-toggle" => "collapse", :type => "button"}
+        %span.sr-only Toggle navigation
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+      %a.navbar-brand{:href => "/"}= t("shared.navbar.title")
+    %ul.nav.navbar-nav
+      %li{:class => "#{navbar_link('articles')}"}
+        %a{:href => articles_path}= t("buttons.articles")
+      %li
+        %a{:href => "#"}
+    - if user_signed_in?
+      .nav.navbar-nav.navbar-right
+        %a.btn.btn-default.navbar-btn{:href => destroy_user_session_path}
+          = t("buttons.sign_out")
+      .nav.navbar-nav.navbar-right
+        %a.btn.btn-default.navbar-btn{:href => edit_user_registration_path}
+          = t("buttons.user_cabinet")
+      .nav.navbar-nav.navbar-right
+        %p.navbar-text= t("shared.navbar.signed")+' '+current_user.name
+    - else
+      .nav.navbar-nav.navbar-right
+        %a.btn.btn-default.navbar-btn{:href => new_user_session_path}= t("devise.sessions.new.sign_in")
+    .nav.navbar-nav.navbar-right.local
+      = select_tag "locale-select", options_for_select({'EN' => :en, "UA" => :uk }, session[:locale]), class: "form-control"

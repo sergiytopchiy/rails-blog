@@ -1,0 +1,17 @@
+= link_to t('buttons.edit'), edit_article_path(@article), class: 'btn btn-warning btn-xs' if user_signed_in? && @article.owned_by?(current_user)
+.pull-right= @article.user.name
+%h2= @article.title
+.article
+  %p= @article.text
+%hr/
+.comments
+  = render @article.comments
+- if user_signed_in?
+  %h2= t('articles.show.add')
+  = render 'comments/form'
+- else
+  %p
+    = t('articles.show.attention')
+= link_to t('buttons.back'), articles_path
+.test
+  %a{:href => "#", :onclick => "loadXMLDoc()"} Paint it red

@@ -8,7 +8,7 @@ describe User do
 
   describe '#name' do
     it 'returns first and last name delimited by space' do
-      user = create(:user, first_name: "Serhiy", last_name: "Topchiy")
+      user = build_stubbed(:user, first_name: "Serhiy", last_name: "Topchiy")
       expect(user.name).to eq('Serhiy Topchiy')
     end
   end
