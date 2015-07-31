@@ -4,7 +4,7 @@ class ArticlesController < ApplicationController
   before_action :validate_author, only: [:edit, :update, :destroy]
 
   def index
-    @articles = Article.all #just assign to instanse variable all of artivles values
+    @articles = Article.paginate(page: params[:page], per_page: 10).order("created_at DESC").includes(:user) #just assign to instanse variable all of artivles values
   end
 
   def new
@@ -32,7 +32,7 @@ class ArticlesController < ApplicationController
 
   def destroy #if we want to destroy some article, we must to know article id
     @article.destroy # this line is calling destroy method from current article
-    redirect_to articles_path #and redirecting to articles
+    head 204 #and redirecting to articles
   end
 
   private

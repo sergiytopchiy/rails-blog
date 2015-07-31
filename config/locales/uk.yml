@@ -53,6 +53,7 @@ uk:
     articles: "Статті"
     sign_out: "Вийти"
     user_cabinet: "Кабінет користувача"
+    save: "Зберегти"
 
   errors:
     not_an_owner: "Ви не власник даної статті"

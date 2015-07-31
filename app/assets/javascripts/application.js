@@ -14,7 +14,10 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require bootstrap-sprockets
+//= require tinymce/preinit.js
+//= require tinymce/tinymce.js
 //= require_tree .
+
 
 $(document).on('change', '#locale-select', function () {
   $.post('/locale', {lang: this.value}).then(function () {
@@ -34,6 +37,17 @@ $(document).on('click', '.comment .btn-danger', function (e) {
   });
 });
 
+$(document).on('click', '.article_body .btn-danger', function (e) {
+  e.preventDefault();
+  $.ajax(e.target.href, {method: 'delete'}).then(function () {
+    $(e.target).parents('.article_body').slideUp('slow');
+  });
+});
+
+
+// $(e.target).action - url adress to create new comment
+//$(e.target).serialize() - keep data from the object
+// function data is a sent data from server
 $(document).on('submit', '#new_comment', function (e) {
   e.preventDefault(); //ignore href attribute of "a" tag
   $.post(e.target.action, $(e.target).serialize()).then(function (data) {
@@ -41,5 +55,13 @@ $(document).on('submit', '#new_comment', function (e) {
     $('.comments').append($comment);
     $comment.slideDown('slow');
     e.target.reset();
+  });
+});
+
+$(document).on('page:change',function(){
+  tinyMCE.remove();
+  tinyMCE.init({
+    selector: '.tinymce',
+    language: document.getElementById('locale-select').value
   });
 });

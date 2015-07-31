@@ -53,6 +53,7 @@ en:
     articles: "Articles"
     sign_out: "Sign out"
     user_cabinet: "User cabinet"
+    save: "Save"
 
   errors:
     not_an_owner: "You are not an owner"

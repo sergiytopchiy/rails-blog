@@ -58,7 +58,7 @@ describe ArticlesController do
       expect(Article.all.size).to be(1)
       delete :destroy, id: article.id
 
-      expect(response).to redirect_to(articles_path)
+      expect(response).to be_success
       expect(Article.all).to be_empty
     end
 

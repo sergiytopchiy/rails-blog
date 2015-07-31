@@ -2,7 +2,7 @@
 .pull-right= @article.user.name
 %h2= @article.title
 .article
-  %p= @article.text
+  %p= raw @article.text
 %hr/
 .comments
   = render @article.comments
