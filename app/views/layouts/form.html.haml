@@ -10,11 +10,9 @@
   %body
     = render 'shared/navbar'
     = render 'shared/notifications'
-    = yield :body
     .container
       .row
-        .col-md-8.col-md-offset-2
+        .col-md-8
           = yield
-    .center
-      =link_to "test", test_index_path
-
+        .col-md-4
+          = yield :categories

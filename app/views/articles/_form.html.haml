@@ -15,7 +15,12 @@
   %p
     = f.label :text, t("articles.form.text")
     %br/
-    = f.text_area :text, class: 'form-control tinymce', rows: '40', colls: '120'
+    = f.text_area :text, class: 'tinymce form-control', rows: '40', colls: '120'
   %p
     = f.submit button_text, class: 'btn btn-default'
-
+  -# - content_for :categories do
+  -#   %ul
+  -#     - Category.all.each do |category|
+  -#       %li
+  -#         = check_box_tag "#{category.category}", category.id, checked(category)
+  -#         = label_tag("#{category.category}")

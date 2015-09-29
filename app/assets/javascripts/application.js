@@ -21,7 +21,7 @@
 
 $(document).on('change', '#locale-select', function () {
   $.post('/locale', {lang: this.value}).then(function () {
-    location.reload();
+    Turbolinks.visit(location.toString());
   });
 });
 
@@ -61,7 +61,9 @@ $(document).on('submit', '#new_comment', function (e) {
 $(document).on('page:change',function(){
   tinyMCE.remove();
   tinyMCE.init({
+    plugins: 'image code media',
     selector: '.tinymce',
     language: document.getElementById('locale-select').value
   });
 });
+

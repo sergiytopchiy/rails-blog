@@ -2,13 +2,18 @@ class ArticlesController < ApplicationController
   skip_before_action :authenticate_user!, only: [:index, :show]
   before_action :find_article, only: [:show, :edit, :update, :destroy]
   before_action :validate_author, only: [:edit, :update, :destroy]
-
+  #before_action :layout, only: [:edit, :new]
   def index
-    @articles = Article.paginate(page: params[:page], per_page: 10).order("created_at DESC").includes(:user) #just assign to instanse variable all of artivles values
+    @articles = Article.paginate(page: params[:page], per_page: 10).order("created_at DESC").includes(:user) #just assign to instanse variable all of articles values
   end
 
   def new
     @article = Article.new
+    @categories = @article.categories.all
+  end
+
+  def edit
+    @categories = @article.categories.all
   end
 
   def create
@@ -49,6 +54,10 @@ class ArticlesController < ApplicationController
     unless @article.owned_by?(current_user)
       redirect_to articles_path, alert: I18n.t('errors.not_an_owner')
     end
+  end
+
+  def layout
+    render layout: "form"
   end
 
 end

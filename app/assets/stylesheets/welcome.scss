@@ -3,7 +3,12 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .jumbotron {
-  background-image:url('http://www.h3dwallpapers.com/wp-content/uploads/2014/08/Landscape-wallpapers-2.jpg');
-  height: 300px;
-  color: #ffffff;
+  background-image: image-url('jumbothron_logo.jpg');
+  height: 160px;
+  padding-bottom: 40px;
+  padding-top: 40px;
 }
+#myCarousel {
+  margin-bottom: 40px;
+}
+

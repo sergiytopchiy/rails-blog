@@ -4,6 +4,9 @@
 .article
   %p= raw @article.text
 %hr/
+.tags
+  - @article.categories.each do |category|
+    = "#{category.category},"
 .comments
   = render @article.comments
 - if user_signed_in?

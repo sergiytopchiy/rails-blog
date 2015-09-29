@@ -5,6 +5,12 @@ Rails.application.routes.draw do
   end
   post 'locale' => 'welcome#locale'
   root 'welcome#index'
+  resources :test, only: [:index] do
+    collection do
+      post :verify
+    end
+  end
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

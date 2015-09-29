@@ -1,0 +1,15 @@
+= datetime_local_field(:user, :graduation_day)
+= range_field(:product, :discount, in: 1..100)
+.video_content.text-center{style: "margin-top: 30px;"}
+  = video_tag "Embrace.mp4", controls: true, autobuffer: true, width: "700px", height: "480px"
+
+.divme
+  %h1 Super text
+= link_to "Get", verify_test_index_path, class: "but"
+
+= form_tag(verify_test_index_path, method: "post", id: "form") do
+  = label_tag(:word, "Input words")
+  = text_field_tag(:word)
+  = submit_tag("Send data", id: "send_button")
+
+.insert
