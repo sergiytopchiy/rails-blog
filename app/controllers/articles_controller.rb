@@ -57,7 +57,8 @@ class ArticlesController < ApplicationController
   end
 
   def layout
-    render layout: "form"
+    render layout: "form" 
+    
   end
 
 end
